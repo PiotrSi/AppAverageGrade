@@ -1,0 +1,31 @@
+<resources>
+    <string name="app_name">My Application1</string>
+    <string name="app_name2">Druga</string>
+    <string name="pole1">imie</string>
+    <string name="pole2">Wpisz imie</string>
+    <string name="pole3">Nazwisko</string>
+    <string name="pole4">Wpisz nazwisko</string>
+    <string name="pole5">Liczba ocen</string>
+    <string name="pole6">Wpisz lizczbę ocen (5-15)</string>
+    <string name="pole7">OCENY</string>
+    <string name="imieErr">Podaj imie</string>
+    <string name="nazwiskoErr">Podaj nawzisko</string>
+    <string name="liczbaErr">Podaj liczbe ocen (5-15)</string>
+    <string-array name="tablica">
+        <item>Element 1</item>
+        <item>Element 2</item>
+        <item>Element 3</item>
+        <item>Element 4</item>
+        <item>Element 5</item>
+        <item>Element 6</item>
+        <item>Element 7</item>
+        <item>Element 8</item>
+        <item>Element 9</item>
+        <item>Element 10</item>
+        <item>Element 11</item>
+        <item>Element 12</item>
+        <item>Element 13</item>
+        <item>Element 14</item>
+        <item>Element 15</item>
+    </string-array>
+</resources>

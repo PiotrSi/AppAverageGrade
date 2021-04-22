@@ -6,11 +6,11 @@
     <string name="pole3">Nazwisko</string>
     <string name="pole4">Wpisz nazwisko</string>
     <string name="pole5">Liczba ocen</string>
-    <string name="pole6">Wpisz lizczbę ocen (5-15)</string>
+    <string name="pole6">Wpisz liczbę ocen (5&#8211;15)</string>
     <string name="pole7">OCENY</string>
     <string name="imieErr">Podaj imie</string>
     <string name="nazwiskoErr">Podaj nawzisko</string>
-    <string name="liczbaErr">Podaj liczbe ocen (5-15)</string>
+    <string name="liczbaErr">Podaj liczbe ocen ( 5&#8211;15)</string>
     <string-array name="tablica">
         <item>Element 1</item>
         <item>Element 2</item>
@@ -28,4 +28,12 @@
         <item>Element 14</item>
         <item>Element 15</item>
     </string-array>
+    "Koniec Programu"
+    <string name="koniecP">Koniec Programu</string>
+    <string name="gratulacje">Gratulacje! otrzymujesz zaliczenie</string>
+    <string name="podanie">Wysyłam podanie o zaliczenie warunkowe!</string>
+    <string name="sup">Super :)</string>
+    <string name="niesup">Tym razem mi nie poszło</string>
+    <string name="napisSrednia">Twoja średnia to </string>
+
 </resources>

@@ -2,10 +2,13 @@ package com.example.myapplication1;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
@@ -20,11 +23,13 @@ public class MainActivity extends AppCompatActivity {
     EditText imie;
     EditText nazwisko;
     EditText liczba;
-    View button;
+    TextView button;
     String pimie="";
     String pnazwisko="";
     int pliczba=0;
     String psliczba;
+    boolean poSredniej=false;
+    Intent dane;
 
     public static final String NAPIS="napis";
 
@@ -32,9 +37,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        /*if (savedInstanceState != null) {
-            imie.setText(savedInstanceState.getString("kImie"));
-        }*/
+
         setContentView(R.layout.constraint_layout);
         imie = findViewById(R.id.imie);
         nazwisko = findViewById(R.id.nazwisko);
@@ -44,7 +47,6 @@ public class MainActivity extends AppCompatActivity {
         imie.addTextChangedListener(spr);
         nazwisko.addTextChangedListener(spr);
         liczba.addTextChangedListener(spr);
-
 
 
 
@@ -137,8 +139,6 @@ public class MainActivity extends AppCompatActivity {
     };
 
 
-
-
     @Override
     protected void onStart() {
 
@@ -148,11 +148,16 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
-        //TextView tv=(TextView) findViewById(R.id.imie);
-        //imie.setText(savedInstanceState.getString("KLUCZ"));
+
+
         imie.setText(savedInstanceState.getString("kImie"));
         nazwisko.setText(savedInstanceState.getString("knazwisko"));
-        //liczba.setText(savedInstanceState.getInt("kliczba"));
+
+        poSredniej=savedInstanceState.getBoolean("PO");
+        if(poSredniej){
+            dane=savedInstanceState.getParcelable("info");
+            powrot();
+        }
     }
 
     @Override
@@ -172,21 +177,16 @@ public class MainActivity extends AppCompatActivity {
 
         super.onStop();
     }
-/*
-    @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        //TextView tv=(TextView) findViewById(R.id.imie);
-        outState.putString("KLUCZ",imie.getText().toString());
 
-        super.onSaveInstanceState(outState);
-    }
-*/
 
 @Override
 public void onSaveInstanceState(Bundle outState) {
     outState.putString("kImie",imie.getText().toString());
     outState.putString("knazwisko",nazwisko.getText().toString());
     //outState.putInt("kliczba",pliczba);
+    outState.putBoolean("PO",poSredniej);
+    outState.putParcelable("info",dane);
+
     super.onSaveInstanceState(outState);
 }
 
@@ -197,33 +197,58 @@ public void onSaveInstanceState(Bundle outState) {
     }
 
 
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode == REQUEST_CODE && resultCode == RESULT_OK)
         {
-            TextView psrednia = findViewById(R.id.srednia);
-            Bundle pakunek=data.getExtras();
-            double srednia=pakunek.getDouble("avg");
-
-            psrednia.setVisibility(View.VISIBLE);
-            psrednia.setText("Twoja średnia to "+srednia);
-            //button.setEnabled(false);
-
+            dane=data;
+            powrot();
         }
     }
 
     private void uruchomDrugaAktywnosc()
     {
-        //EditText et=(EditText) findViewById(R.id.imie);
+
 
         Intent zamiar=new Intent(this,Druga.class);
-        //zamiar.putExtra(NAPIS,imie.getText().toString());
+
         String sLiczba= liczba.getText().toString();
 
         zamiar.putExtra(NAPIS,sLiczba);
         startActivityForResult(zamiar,REQUEST_CODE);
-        //startActivity(zamiar);
     }
+
+    private void powrot(){
+        TextView psrednia = findViewById(R.id.srednia);
+        Bundle pakunek=dane.getExtras();
+        double srednia=pakunek.getDouble("avg");
+
+        psrednia.setVisibility(View.VISIBLE);
+        psrednia.setText(getString(R.string.napisSrednia)+srednia);
+        if(srednia >=3){
+            button.setText(getString(R.string.sup));
+        }else button.setText(getString(R.string.niesup));
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder alertDialog = new AlertDialog.Builder(psrednia.getContext());
+                alertDialog.setTitle(getString(R.string.koniecP));
+                if(srednia >=3){
+                    alertDialog.setMessage(getString(R.string.gratulacje));
+                }else alertDialog.setMessage(getString(R.string.podanie));
+                alertDialog.setNeutralButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        finish();
+                    }
+                });
+                alertDialog.create().show();
+            }
+        });
+        poSredniej = true;
+
+    }
+
+
 }

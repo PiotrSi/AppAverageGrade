@@ -21,9 +21,6 @@ public class InteraktywnyAdapterTablicy extends
     private int liczba;
     int nr;
     private Activity kontekst;
-    //LayoutInflater pompka = kontekst.getLayoutInflater();
-
-    //ocenyViewHolder.mGrupaOceny.chck(R.id.ocena2Button);
 
     public InteraktywnyAdapterTablicy(Activity kontekst, List<ModelOceny> listaOcen) {
         mPompka = kontekst.getLayoutInflater();
@@ -43,11 +40,10 @@ public class InteraktywnyAdapterTablicy extends
     public void onBindViewHolder(@NonNull OcenyViewHolder ocenyViewHolder, int numerWiersza) {
 
         //powiązenia grupy przyciwkoów radiowych z wierszem listy
-
         ocenyViewHolder.ocenaGroup.setTag(mListaOcen.get(numerWiersza));
         nr=numerWiersza;
         ModelOceny value = mListaOcen.get(numerWiersza);
-       // value.setOcena(liczba);
+
         //ustawienie nazwy przedmiotu
         ocenyViewHolder.etykieta.setTag(numerWiersza);
         ocenyViewHolder.etykieta.setText(value.getNazwa());
@@ -69,7 +65,6 @@ public class InteraktywnyAdapterTablicy extends
                 break;
         }
 
-         //ModelOceny element = (ModelOceny) group.getTag();
     }
 
     //zwraca liczbę elementów
@@ -95,29 +90,17 @@ public class InteraktywnyAdapterTablicy extends
             ocenaGroup = glownyElementWiersza.findViewById(R.id.grupaOceny);
             ocenaGroup.setOnCheckedChangeListener(this);
             //ustawienie obsługi zdarzeń w komponentach znajducjących się w wierszu
-            //addListenerOnButton();
-            //ocenaGroup.setOnCheckedChangeListener(new ocenaGroup.OnCheckedChangeListener());
         }
 
         //implementacja interfejsow obsługujących zdarzenia
-        //ocenaGroup.setOnCheckedChangeListener(new ocenaGroup.OnCheckedChangeListener()
 
 
 
         @Override
         public void onCheckedChanged(RadioGroup group, int checkedId) {
-                // get selected radio button from radioGroup
-
-            //ModelOceny.setOcena([Integer.parseInt(glownyElement.getTag().toString())] =checkedId);
-           // int selectedId = ocenaGroup.getCheckedRadioButtonId();
-
-            // find the radiobutton by returned id
-            //ocenaButton = ocenaButton.findViewById(checkedId);
-            //ocenaButton.setChecked(true);
 
             ModelOceny value =(ModelOceny) group.getTag();
 
-            //int pos = (Integer) tag;
             liczba = checkedId;
             switch (checkedId){
                 case R.id.ocena2:
@@ -133,16 +116,7 @@ public class InteraktywnyAdapterTablicy extends
                     liczba = 5;
                     break;
             }
-           // ModelOceny value = mListaOcen.get(liczba);
             value.setOcena(liczba);
-            //int index=(Integer) group.getTag();
-            //mListaOcen.set(index,value);
-            //ModelOceny value = mListaOcen.get(liczba);
-
-            //value.setOcena(liczba);
-
-            //Toast.makeText(kontekst,lala.toString(), Toast.LENGTH_SHORT).show();
-
         }
     }
 }

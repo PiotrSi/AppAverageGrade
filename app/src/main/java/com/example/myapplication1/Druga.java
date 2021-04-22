@@ -19,9 +19,6 @@ import java.util.List;
 
 public class Druga extends AppCompatActivity {
 
-    //EditText imie;
-    //EditText nazwisko;
-    //EditText liczba;
     ArrayList<ModelOceny> mDane;
     RecyclerView mListaOcen;
     View avg;
@@ -33,12 +30,9 @@ public class Druga extends AppCompatActivity {
         setContentView(R.layout.lista_ocen_rv);
            avg = findViewById(R.id.averageButton);
         String[] nazwyPrzedmiotow=getResources().getStringArray(R.array.tablica);
-        //setContentView(R.layout.constraint_layout);
-        //mDane = savedInstanceState.getParcelableArrayList("COS");
-        //imie = findViewById(R.id.imie);
-        //odczyt danych z pierwszej
+
         Bundle pakunek=getIntent().getExtras();
-        //imie.setText(pakunek.getString(MainActivity.NAPIS));
+
         String liczba =pakunek.getString(MainActivity.NAPIS);
         intLiczba=Integer.parseInt(liczba);
 
@@ -49,13 +43,8 @@ public class Druga extends AppCompatActivity {
 
 
             if (savedInstanceState != null) {
-                int[] table = new int[intLiczba];
-                table = savedInstanceState.getIntArray("COS");
 
-            for (int i = 0; i < intLiczba; i++)
-                mDane.add(new ModelOceny(nazwyPrzedmiotow[i], table[i]));
-
-
+                mDane = savedInstanceState.getParcelableArrayList("COS");
 
         }else {
             for (int i = 0; i < intLiczba; i++)
@@ -92,43 +81,24 @@ public class Druga extends AppCompatActivity {
     }
     @Override
     protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
-        //mDane = savedInstanceState.getParcelableArrayList("COS");
     }
 
     private void uruchomMainAktywnosc()
     {
-        //EditText et=(EditText) findViewById(R.id.imie);
         double wartosc = liczAVG();
         Intent zamiar=new Intent();
-        //zamiar.putExtra(NAPIS,imie.getText().toString());
-        //String sLiczba= liczba.getText().toString();
         Bundle pakunek=new Bundle();
         pakunek.putDouble("avg",wartosc);
         int kod = 1010;
         zamiar.putExtras(pakunek);
-        //startActivityForResult(zamiar, 100);
         setResult(RESULT_OK,zamiar);
         finish();
-        //startActivityForResult(zamiar,kod);
     }
     @Override
     public void onSaveInstanceState(Bundle outState) {
-        //outState.putString("kImie",imie.getText().toString());
 
-        //outState.putIntArray("RADIO",mDane);
-        //outState.putInt("COS",);
+        outState.putParcelableArrayList("COS", mDane);
 
-        /*
-        int[] table = new int[intLiczba];
-        ModelOceny model ;
-        for(int i =0;i <intLiczba;i++) {
-            model = mDane.get(i);
-            table[i]= model.getOcena();
-        }
-        */
-        outState.putParcelable("COS", (Parcelable) mDane);
-        //outState.putParcelableArrayList("COS", (ArrayList<? extends Parcelable>) mDane);
-        //outState.putIntArray("COS",table);
         super.onSaveInstanceState(outState);
     }
 
